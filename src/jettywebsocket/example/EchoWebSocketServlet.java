@@ -36,12 +36,12 @@ public class EchoWebSocketServlet extends WebSocketServlet implements WebSocketL
 
 	@Override
 	public void onWebSocketClose(int statusCode, String reason) {
-		System.out.println(String.format("Socket closed with status %s reason %s.", statusCode, reason));
+		System.out.println(String.format("[SERVER] Socket closed with status %s reason %s.", statusCode, reason));
 	}
 
 	@Override
 	public void onWebSocketConnect(Session session) {
-		System.out.println(String.format("User %s connected.", session.getRemoteAddress().getAddress()));
+		System.out.println(String.format("[SERVER] User %s connected.", session.getRemoteAddress().getAddress()));
 		this.session = session;
 	}
 
@@ -53,7 +53,7 @@ public class EchoWebSocketServlet extends WebSocketServlet implements WebSocketL
 
 	@Override
 	public void onWebSocketBinary(byte[] array, int offset, int length) {
-		System.out.println(String.format("Received bytes of length %d", length));
+		System.out.println(String.format("[SERVER] Received bytes of length %d", length));
 		try {
 			this.session.getRemote().sendBytes(ByteBuffer.wrap(array, offset, length));
 		} catch (IOException e) {
@@ -64,7 +64,7 @@ public class EchoWebSocketServlet extends WebSocketServlet implements WebSocketL
 
 	@Override
 	public void onWebSocketText(String text) {
-		System.out.println(String.format("Received text: %s", text));
+		System.out.println(String.format("[SERVER] Received text: %s", text));
 		try {
 			this.session.getRemote().sendString(text);
 		} catch (IOException e) {
